@@ -139,7 +139,7 @@ Certbot tidak diperlukan: TLS pengunjung ditangani Cloudflare, dan Cloudflare �
 | WAV | sumber PCM 16-bit → copy | `pcm_s16le` |
 | MP4 | video H.264/HEVC → remux `-c:v copy` (+ audio copy bila AAC/MP3) | x264 `veryfast` CRF 23 |
 
-- **Unduhan URL dipilih agar fast-path bisa dipakai**: MP3/WAV hanya mengunduh stream audio (tanpa video); M4A/Audio Copy memprioritaskan audio AAC; MP4 memprioritaskan H.264 + AAC (≤ `MAX_VIDEO_HEIGHT`). yt-dlp memakai `--concurrent-fragments 4`.
+- **Unduhan URL dipilih agar fast-path bisa dipakai**: MP3/WAV hanya mengunduh stream audio (tanpa video); M4A/Audio Copy memprioritaskan audio AAC; MP4 mengambil resolusi tertinggi ≤ `MAX_VIDEO_HEIGHT` (default 720p), lalu memprioritaskan H.264 + AAC. yt-dlp memakai `--concurrent-fragments 4`.
 - Trim memakai input seeking (`-ss` sebelum `-i`) → hampir instan. Pada remux video, titik potong mengikuti keyframe.
 - `FFMPEG_THREADS` default = jumlah CPU / `MAX_CONCURRENT_JOBS`, jadi 2 job paralel tidak saling berebut CPU. Encoder MP3 (LAME) sendiri single-thread; percepatan utama ada di decode dan di menjalankan 2 job sekaligus.
 - `MP3_ALGORITHM_QUALITY=5` jauh lebih cepat daripada default LAME (3) dengan perbedaan kualitas yang praktis tak terdengar pada 192–320k. Pakai `7` untuk lebih cepat lagi, `2` untuk kualitas maksimum.

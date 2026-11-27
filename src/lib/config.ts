@@ -71,7 +71,7 @@ export function getConfig(): AppConfig {
     jobTimeoutMinutes: int('JOB_TIMEOUT_MINUTES', 30, 1, 24 * 60),
     ffmpegThreads: int('FFMPEG_THREADS', defaultThreads, 1, 64),
     videoPreset: X264_PRESETS.includes(preset) ? preset : 'veryfast',
-    maxVideoHeight: int('MAX_VIDEO_HEIGHT', 1080, 144, 4320),
+    maxVideoHeight: int('MAX_VIDEO_HEIGHT', 720, 144, 4320),
     mp3AlgorithmQuality: int('MP3_ALGORITHM_QUALITY', 5, 0, 9),
 
     accessPin: str('ACCESS_PIN'),

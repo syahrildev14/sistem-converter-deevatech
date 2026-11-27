@@ -27,7 +27,7 @@ services:
       # --- speed tuning ---
       FFMPEG_THREADS: ${FFMPEG_THREADS:-}
       VIDEO_PRESET: ${VIDEO_PRESET:-veryfast}
-      MAX_VIDEO_HEIGHT: ${MAX_VIDEO_HEIGHT:-1080}
+      MAX_VIDEO_HEIGHT: ${MAX_VIDEO_HEIGHT:-720}
       MP3_ALGORITHM_QUALITY: ${MP3_ALGORITHM_QUALITY:-5}
       # --- URL source ---
       ENABLE_URL_SOURCE: ${ENABLE_URL_SOURCE:-true}

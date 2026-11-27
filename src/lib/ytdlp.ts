@@ -19,8 +19,10 @@ export interface DownloadResult {
  */
 function formatSelector(format: OutputFormat, maxHeight: number): string {
   if (format === 'mp4') {
+    // Resolution comes from `-S res:<maxHeight>` (see downloadFromUrl); H.264/AAC only break ties,
+    // so a missing H.264 stream never drops us to the 360p progressive fallback.
     const h = `[height<=${maxHeight}]`;
-    return `bv*[vcodec^=avc1]${h}+ba[ext=m4a]/b[ext=mp4]${h}/bv*${h}+ba/b${h}/b`;
+    return `bv*${h}+ba/b${h}/b`;
   }
   if (format === 'm4a' || format === 'audio-copy') return 'ba[ext=m4a]/ba/b';
   return 'ba/b';
@@ -79,7 +81,9 @@ export async function downloadFromUrl(
     '-f', formatSelector(format, cfg.maxVideoHeight),
     '-o', path.join(/*turbopackIgnore: true*/ dir, 'source.%(ext)s'),
   ];
-  if (format === 'mp4') args.push('--merge-output-format', 'mp4');
+  if (format === 'mp4') {
+    args.push('-S', `res:${cfg.maxVideoHeight},vcodec:h264,acodec:aac`, '--merge-output-format', 'mp4');
+  }
   if (cfg.ytdlpJsRuntimes) args.push('--js-runtimes', cfg.ytdlpJsRuntimes);
   if (cfg.ytdlpCookiesFile) args.push('--cookies', cfg.ytdlpCookiesFile);
   // "--" guarantees the URL is never parsed as an option.

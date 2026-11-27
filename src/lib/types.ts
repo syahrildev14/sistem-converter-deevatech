@@ -57,8 +57,8 @@ export const FORMAT_INFO: Record<OutputFormat, FormatInfo> = {
     kind: 'audio',
   },
   mp4: {
-    label: 'MP4 Video',
-    short: 'MP4',
+    label: 'MP4 Video 720p',
+    short: 'MP4 720p',
     description: 'Remux tanpa re-encode bila H.264/HEVC, selain itu H.264 veryfast',
     kind: 'video',
   },
